@@ -199,3 +199,6 @@ readr::write_csv(hero, "herois_completo.csv")
 
 
 
+
+
+
