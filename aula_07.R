@@ -308,7 +308,7 @@ retornar_datas <- function(dta, dia_semana = 2){
 }
 
 
-retornar_datas("1993-09-01", 2)
+retornar_datas("1993-09-01", 7)
 retornar_datas(today(), 4)
 retornar_datas("2020-02-15", 4)
 
