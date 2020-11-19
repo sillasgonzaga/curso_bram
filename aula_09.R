@@ -251,6 +251,122 @@ df_2017 %>%
   geom_boxplot()
 
 
+#### aula 10
+
+df_2017 %>% 
+  select(country, continent, populacao_2020) %>% 
+  arrange(desc(populacao_2020)) %>% 
+  group_by(continent) %>% 
+  summarise(populacao_total_bi = sum(populacao_2020)/1e6) %>% 
+  ggplot(aes(x = continent,
+             y = populacao_total_bi)) +
+  geom_col() +
+  geom_text(aes(label = round(populacao_total_bi, 2)))
+ggsave(filename = "meu grafico de barras.png")
+
+
+# teste com geom_label
+df_2017 %>% 
+  select(country, continent, populacao_2020) %>% 
+  arrange(desc(populacao_2020)) %>% 
+  group_by(continent) %>% 
+  summarise(populacao_total_bi = sum(populacao_2020)/1e6) %>% 
+  ggplot(aes(x = continent,
+             y = populacao_total_bi)) +
+  geom_col() +
+  geom_label(aes(label = round(populacao_total_bi, 2)),
+             #vjust = 1.2
+             vjust = c(1.2, 1.2, 1.2, 1.2, -0.1),
+             hjust = 0.5
+             )
+
+
+df_brasil <- df_2017 %>% filter(country == "Brazil")
+df_brasil
+
+
+df_2017 %>% 
+  ggplot(aes(x = log_gdp_per_capita,
+             y =  healthy_life_expectancy_at_birth)) +
+  geom_point() +
+  geom_point(data = df_brasil, color = "red") +
+  geom_text(data = df_brasil, aes(label = country), color = "purple")
+
+
+df_2017 %>% 
+  ggplot(aes(x = log_gdp_per_capita,
+             y =  healthy_life_expectancy_at_birth,
+             color = continent)) +
+  geom_point() +
+  # usando uma paleta de cores pronta
+  scale_color_brewer(type = "qual",
+                     palette = "Set1")
+
+df_2017 %>% 
+  ggplot(aes(x = log_gdp_per_capita,
+             y =  healthy_life_expectancy_at_birth,
+             color = continent)) +
+  geom_point() +
+  # definindo as cores manualmete
+  scale_color_manual(values = c("black", "red", "yellow", "green", "blue"))
+  
+# facets
+grafico <- df_2017 %>% 
+  ggplot(aes(x = log_gdp_per_capita,
+             y = healthy_life_expectancy_at_birth,
+             color = life_ladder)) +
+  geom_point() +
+  facet_wrap(vars(continent),
+             scales = "fixed") +
+  scale_color_distiller(type = "seq",
+                        palette = "YlOrRd") 
+
+
+
+class(grafico)
+
+grafico <- grafico +
+  labs(x = "USD / per capita (log)",
+       y = "Idade",
+       title = "Expectativa de vida em função do pib per capitas dos países",
+       color = "Índ. felicidade")
+
+grafico
+
+grafico +
+  theme_bw()
+
+grafico + theme_minimal()
+
+ggsave(filename = "meu grafico 02.png")
+
+
+grafico
+
+?ggsave
+
+
+#### cap 13 ----
+library(plotly)
+library(gapminder)
+
+grafico2 <- gapminder %>% 
+  filter(year == 2007) %>% 
+  ggplot(aes(x = gdpPercap,
+             y = lifeExp,
+             color = continent,
+             nome_tooltip = country)) +
+  geom_point() +
+  scale_x_log10()
+
+p
+# tooltip
+ggplotly(p = grafico2, tooltip = "nome_tooltip")
+?ggplotly
+
+
+
+
 
 
 

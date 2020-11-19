@@ -1,0 +1,65 @@
+---
+title: "Iniciando no Rmarkdown"
+author: "Sillas"
+date: "17/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(plotly)
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+Este chunk abaixo foi criado por nós. Eu vou usar o atalho Ctrl + Alt + I.
+
+```{r}
+df <- tibble(var = c(1, 3, 5, 7, 9, 11))
+
+mean(df$var)
+```
+
+
+Este chunk vai produzir um gráfico:
+
+```{r, fig.width=5}
+#head(economics)
+
+ggplot(economics, 
+       aes(x = date,
+           y = psavert)) +
+  geom_line()
+
+```
+
+Isto é um gráfico interativo
+
+```{r}
+ggplotly()
+```
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
